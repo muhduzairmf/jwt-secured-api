@@ -3,7 +3,7 @@
 JWT Secured API is a simple project created by me, dedicated for learning JWT or [JSON Web Tokens](https://jwt.io/) as a authentication and authorization process.          
 
 
-In this project, I am using JWT with Express and Node.js, along with [express-validator](https://express-validator.github.io/docs/) as a validation input and [Prisma](https://www.prisma.io/) as a ORM to connect with [SQLite](https://sqlite.org/index.html) database.      
+In this project, I am using JWT with Express and Node.js, along with [express-validator](https://express-validator.github.io/docs/) as a validation input and [Prisma](https://www.prisma.io/) as an ORM to connect with [SQLite](https://sqlite.org/index.html) database.      
 
 To test this API locally, you need to have [Node.js](https://nodejs.org/en/) installed on your local machine. Then, kindly download the zip file of the source code. After extract the folder, open the terminal and type       
 
@@ -43,7 +43,7 @@ These routes is available publicly without sending tokens in request header.
 
 ## Protected routes        
 
-These routes is needed a tokens in request header to access it. The tokens can be obtained from `http://localhost:3275/auth/signup` as a `POST` request if you does not signed up, or `http://localhost:3275/auth/login` as a `POST` if you have signed up.          
+These routes is needed a tokens in request header to access it. The tokens can be obtained from `http://localhost:3275/auth/signup` as a `POST` request if you does not signed up, or `http://localhost:3275/auth/login` as a `POST` request if you have signed up.          
 
 `POST`: `http://localhost:3275/post`       
 `PATCH`: `http://localhost:3275/post/:id`       
