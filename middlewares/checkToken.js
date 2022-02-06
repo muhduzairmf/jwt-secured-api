@@ -1,3 +1,6 @@
+// Import JWT library for sign and verify token
+const jwt = require("jsonwebtoken");
+
 // checkToken.js is a middleware for validating access token from users
 module.exports = (req, res, next) => {
     // Get the Authorization value from header
@@ -16,6 +19,7 @@ module.exports = (req, res, next) => {
     try {
         jwt.verify(token, process.env.ACCESS_TOKEN);
     } catch (error) {
+        console.log(error);
         res.status(403).json({ msg: "Invalid or expired token." });
         return;
     }

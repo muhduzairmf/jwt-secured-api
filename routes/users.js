@@ -14,9 +14,6 @@ const { check, validationResult } = require("express-validator");
 // Import crypto modules to hash and salt a password, used changing password
 const { scryptSync, randomBytes, timingSafeEqual } = require("crypto");
 
-// Import JWT library for sign and verify token
-const jwt = require("jsonwebtoken");
-
 // Public route, for all users, only user's name
 router.get("/", async (req, res) => {
     const allUsers = await prisma.user.findMany({
@@ -64,6 +61,14 @@ router.patch(
     // Use express-validator to validate email
     [check("email", "Please provide a valid email.").isEmail()],
     async (req, res) => {
+        const { id } = req.params;
+        const { email } = req.body;
+
+        if (!email) {
+            res.status(400).json({ msg: "Please provide email to update." });
+            return;
+        }
+
         // Receive errors from express-validator if any
         let errors = validationResult(req);
 
@@ -71,9 +76,6 @@ router.patch(
             res.status(400).json({ errors: errors.array() });
             return;
         }
-
-        const { id } = req.params;
-        const { email } = req.body;
 
         // Get all users
         const allUsers = await prisma.user.findMany();
@@ -116,6 +118,14 @@ router.patch(
         ).isLength({ min: 2, max: 50 }),
     ],
     async (req, res) => {
+        const { id } = req.params;
+        const { name } = req.body;
+
+        if (!name) {
+            res.status(400).json({ msg: "Please provide name to update" });
+            return;
+        }
+
         // Receive errors from express-validator if any
         let errors = validationResult(req);
 
@@ -123,9 +133,6 @@ router.patch(
             res.status(400).json({ errors: errors.array() });
             return;
         }
-
-        const { id } = req.params;
-        const { name } = req.body;
 
         const updatedUser = await prisma.user.update({
             where: {
@@ -149,11 +156,24 @@ router.patch(
     checkToken,
     [
         // Use express-validator to validate password
-        check("password", "Password must be more than 5 characters.").isLength({
+        check(
+            "newPassword",
+            "Password must be more than 5 characters."
+        ).isLength({
             min: 6,
         }),
     ],
     async (req, res) => {
+        const { id } = req.params;
+        const { currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            res.status(400).json({
+                msg: "Please provide current password and new password to update.",
+            });
+            return;
+        }
+
         // Receive errors from express-validator if any
         let errors = validationResult(req);
 
@@ -161,9 +181,6 @@ router.patch(
             res.status(400).json({ errors: errors.array() });
             return;
         }
-
-        const { id } = req.params;
-        const { currentPassword, newPassword } = req.body;
 
         const theUser = await prisma.user.findUnique({
             where: {

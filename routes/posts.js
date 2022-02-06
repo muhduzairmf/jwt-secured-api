@@ -8,9 +8,6 @@ const prisma = new PrismaClient();
 // Import checkToken middleware
 const checkToken = require("../middlewares/checkToken");
 
-// Import JWT library for sign and verify token
-const jwt = require("jsonwebtoken");
-
 // Public route, for getting all posts
 router.get("/", async (req, res) => {
     const allPosts = await prisma.post.findMany();
@@ -24,7 +21,7 @@ router.get("/:id", async (req, res) => {
 
     const thePost = await prisma.post.findUnique({
         where: {
-            id,
+            id: parseInt(id),
         },
     });
 
@@ -39,6 +36,13 @@ router.get("/:id", async (req, res) => {
 // Protected route, for creating a new post
 router.post("/", checkToken, async (req, res) => {
     const { title, content, authorId } = req.body;
+
+    if (!title || !content || !authorId) {
+        res.status(400).json({
+            msg: "Please provide title, content and authorId to create a post.",
+        });
+        return;
+    }
 
     const newPost = await prisma.post.create({
         data: {
@@ -55,6 +59,11 @@ router.post("/", checkToken, async (req, res) => {
 router.patch("/:id/title", checkToken, async (req, res) => {
     const { id } = req.params;
     const { title } = req.body;
+
+    if (!title) {
+        res.status(400).json({ msg: "Please provide title to update." });
+        return;
+    }
 
     const updatedPost = await prisma.post.update({
         where: {
@@ -80,6 +89,11 @@ router.patch("/:id/title", checkToken, async (req, res) => {
 router.patch("/:id/content", checkToken, async (req, res) => {
     const { id } = req.params;
     const { content } = req.body;
+
+    if (!content) {
+        res.status(400).json({ msg: "Please provide title to update." });
+        return;
+    }
 
     const updatedPost = await prisma.post.update({
         where: {
