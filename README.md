@@ -46,7 +46,10 @@ These routes is available publicly without sending tokens in request header.
 These routes is needed a tokens in request header to access it. The tokens can be obtained from `http://localhost:3275/auth/signup` as a `POST` request if you does not signed up, or `http://localhost:3275/auth/login` as a `POST` request if you have signed up.          
 
 `POST`: `http://localhost:3275/post`       
-`PATCH`: `http://localhost:3275/post/:id`       
+`PATCH`: `http://localhost:3275/post/:id/title`       
+`PATCH`: `http://localhost:3275/post/:id/content`       
 `DELETE`: `http://localhost:3275/post/:id`       
-`PATCH`: `http://localhost:3275/user/:id`       
+`PATCH`: `http://localhost:3275/user/:id/email`       
+`PATCH`: `http://localhost:3275/user/:id/name`       
+`PATCH`: `http://localhost:3275/user/:id/password`       
 `DELETE`: `http://localhost:3275/user/:id`       
