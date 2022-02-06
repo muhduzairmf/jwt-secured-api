@@ -14,6 +14,9 @@ const { check, validationResult } = require("express-validator");
 // Import crypto modules to hash and salt a password, used changing password
 const { scryptSync, randomBytes, timingSafeEqual } = require("crypto");
 
+// Import JWT library for sign and verify token
+const jwt = require("jsonwebtoken");
+
 // Public route, for all users, only user's name
 router.get("/", async (req, res) => {
     const allUsers = await prisma.user.findMany({
