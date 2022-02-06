@@ -8,6 +8,9 @@ const prisma = new PrismaClient();
 // Import checkToken middleware
 const checkToken = require("../middlewares/checkToken");
 
+// Import JWT library for sign and verify token
+const jwt = require("jsonwebtoken");
+
 // Public route, for getting all posts
 router.get("/", async (req, res) => {
     const allPosts = await prisma.post.findMany();
