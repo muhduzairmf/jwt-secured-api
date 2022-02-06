@@ -17,7 +17,8 @@ const jwt = require("jsonwebtoken");
 // A route for signing up as a new user
 router.post(
     "/signup",
-    [ // Use express-validator to validate email, name and password
+    [
+        // Use express-validator to validate email, name and password
         check("email", "Please provide a valid email.").isEmail(),
         check(
             "name",
