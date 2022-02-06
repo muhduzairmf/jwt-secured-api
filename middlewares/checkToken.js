@@ -6,7 +6,9 @@ module.exports = (req, res, next) => {
     const [type, token] = authHeader.split(" ");
 
     if (type !== "Bearer" || !token) {
-        res.status(401).json({ msg: "Token not found. Please provide a token." });
+        res.status(401).json({
+            msg: "Token not found. Please provide a token.",
+        });
         return;
     }
 
