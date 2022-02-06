@@ -11,7 +11,7 @@ app.use(express.json());
 
 // A route for root
 app.get("/", (req, res) => {
-    res.json({ message: "Hello, World" });
+    res.json({ msg: "Hello, World" });
 });
 
 // Import and use routes from routes/auth.js
@@ -22,6 +22,16 @@ app.use("/post", require("./routes/posts"));
 
 // Import and use routes from routes/users.js
 app.use("/user", require("./routes/users"));
+
+const invalidRoute = (req, res) => {
+    res.json({ msg: "Not found the route." });
+};
+
+app.route("/*")
+    .get(invalidRoute)
+    .post(invalidRoute)
+    .patch(invalidRoute)
+    .delete(invalidRoute);
 
 // Set up a port for this server
 app.listen(3275, () => {
