@@ -68,8 +68,16 @@ router.post(
             },
         });
 
+        let limit = 60 * 60 * 24;
+        // 24 hours limit of the generated token
+        let expires = Math.floor(Date.now() / 1000) + limit;
+        let payload = {
+            newUser,
+            expires,
+        };
+
         // Create an access token, it will use by user for authorization
-        const accessToken = jwt.sign(newUser, process.env.ACCESS_TOKEN);
+        const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN);
 
         res.status(200).json({ msg: "Successfully signed up.", accessToken });
     }
@@ -123,8 +131,16 @@ router.post(
             return;
         }
 
+        let limit = 60 * 60 * 24;
+        // 24 hours limit of the generated token
+        let expires = Math.floor(Date.now() / 1000) + limit;
+        let payload = {
+            checkUser,
+            expires,
+        };
+
         // Create an access token, it will use by user for authorization
-        const accessToken = jwt.sign(checkUser, process.env.ACCESS_TOKEN);
+        const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN);
 
         res.status(200).json({ msg: "Successfully logged in.", accessToken });
     }

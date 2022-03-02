@@ -17,7 +17,10 @@ module.exports = (req, res, next) => {
 
     // Verify the given token in try catch
     try {
-        jwt.verify(token, process.env.ACCESS_TOKEN);
+        let payload = jwt.verify(token, process.env.ACCESS_TOKEN);
+        let current = Math.floor(Date.now() / 1000);
+        let diff = current - payload.expires;
+        console.log(diff);
     } catch (error) {
         console.log(error);
         res.status(403).json({ msg: "Invalid or expired token." });
